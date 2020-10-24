@@ -5,21 +5,21 @@ using System;
 
 using Player = Exiled.Events.Handlers.Player;
 
-namespace Spawnprotectdisable
+namespace XyberC_plugin
 {
-    public class Spawnprotectdisable : Plugin<Config>
+    public class XyberC_plugin : Plugin<Config>
     {
-        private static readonly Lazy<Spawnprotectdisable> LazyInstance = new Lazy<Spawnprotectdisable>(valueFactory: () => new Spawnprotectdisable());
-        public Spawnprotectdisable Instance => LazyInstance.Value;
+        private static readonly Lazy<XyberC_plugin> LazyInstance = new Lazy<XyberC_plugin>(valueFactory: () => new XyberC_plugin());
+        public XyberC_plugin Instance => LazyInstance.Value;
 
-        private Handlers.Spawnprotectdisable_H player;
+        private Handlers.XyberC_plugin_H player;
 
-        public override string Name { get; } = "Spawnprotectdisable";
+        public override string Name { get; } = "XyberC_plugin";
         public override string Author { get; } = "Seeloewe";
 
         public override void OnEnabled()
         {
-            player = new Handlers.Spawnprotectdisable_H();
+            player = new Handlers.XyberC_plugin_H();
             Player.Shooting += player.OnShooting;
             Player.Dying += player.OnDying;
         }

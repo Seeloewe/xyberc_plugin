@@ -1,9 +1,9 @@
 using Exiled.Events.EventArgs;
 using Exiled.API.Features;
 
-namespace Spawnprotectdisable.Handlers
+namespace XyberC_plugin.Handlers
 {
-    class Spawnprotectdisable_H
+    class XyberC_plugin_H
     {
         public void OnShooting(ShootingEventArgs ev)
         {
