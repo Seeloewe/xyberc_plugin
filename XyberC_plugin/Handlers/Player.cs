@@ -1,5 +1,6 @@
 using Exiled.Events.EventArgs;
 using Exiled.API.Features;
+using System.Linq;
 
 namespace XyberC_plugin.Handlers
 {
@@ -7,32 +8,33 @@ namespace XyberC_plugin.Handlers
     {
         public void OnShooting(ShootingEventArgs ev)
         {
-            if (ev.Shooter.IsGodModeEnabled == true && ev.Shooter.Role != RoleType.Tutorial)
+            if (ev.Shooter.IsGodModeEnabled && ev.Shooter.Role != RoleType.Tutorial)
             {
                 ev.Shooter.IsGodModeEnabled = false;
                 Log.Info($"{ev.Shooter.Nickname} got godmode removed");
             }
+            if (XyberC_plugin.HasAdminGun.Any(s => s.Userid == ev.Shooter.UserId))
+            {
+                Log.Info("Admin Gun has been used");
+                Player player = Player.Get(ev.Target);
+                if(player != null)
+                {
+                    Log.Info($"on {player.Nickname}");
+                    AdminGunClass gun = XyberC_plugin.HasAdminGun.Find(s => s.Userid == ev.Shooter.UserId);
+                    Log.Info($"doing \"{gun.Command.Replace("%", $"{player.Id}")}\"");
+                    Log.Info($"doing \"{gun.Command.Replace("%", $"{player.Id}")}\"");
+                    GameCore.Console.singleton.TypeCommand($"{gun.Command.Replace("%", $"{player.Id}")}", player.Sender);
+                }
+            }
         }
         public void OnDying(DyingEventArgs ev)
         {
-            Log.Info($"Player died");
-            if (ev.Target.IsCuffed == true)
+            if (ev.Target.IsCuffed && (ev.Killer.Side == Exiled.API.Enums.Side.Mtf || ev.Killer.Side == Exiled.API.Enums.Side.ChaosInsurgency))
             {
-                Log.Info($"Player that died was cuffed");
-            }
-            if (ev.Killer.Side == Exiled.API.Enums.Side.Mtf)
-            {
-                Log.Info($"Player that killed was MTF or Scientist");
-            }
-            if (ev.Target.IsCuffed == true && (ev.Killer.Side == Exiled.API.Enums.Side.Mtf || ev.Killer.Side == Exiled.API.Enums.Side.ChaosInsurgency))
-            {
-                Log.Info($"Success");
                 foreach (Player Pl in Player.List)
                 {
-                    Log.Info($"This should be here once per player");
                     if (Pl.ReferenceHub.serverRoles.RemoteAdmin)
                     {
-                        Log.Info($"This should be here once per admin");
                         Pl.Broadcast(10, $"{ev.Killer.Nickname} ({ev.Killer.Id}) killed {ev.Target.Nickname} ({ev.Target.Id}) while cuffed", Broadcast.BroadcastFlags.AdminChat);
                     }
                 }
