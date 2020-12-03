@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XyberC_plugin</RootNamespace>
-    <AssemblyName>XyberC_plugin_B</AssemblyName>
+    <AssemblyName>XyberC_plugin_A</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -45,23 +45,23 @@
     <Reference Include="CommandSystem.Core">
       <HintPath>..\DLLs\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API, Version=2.1.15.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.15\lib\net472\Exiled.API.dll</HintPath>
+    <Reference Include="Exiled.API, Version=2.1.18.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.1.18\lib\net472\Exiled.API.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Bootstrap, Version=2.1.15.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.15\lib\net472\Exiled.Bootstrap.dll</HintPath>
+    <Reference Include="Exiled.Bootstrap, Version=2.1.18.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.1.18\lib\net472\Exiled.Bootstrap.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events, Version=2.1.15.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.15\lib\net472\Exiled.Events.dll</HintPath>
+    <Reference Include="Exiled.Events, Version=2.1.18.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.1.18\lib\net472\Exiled.Events.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Loader, Version=2.1.15.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.15\lib\net472\Exiled.Loader.dll</HintPath>
+    <Reference Include="Exiled.Loader, Version=2.1.18.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.1.18\lib\net472\Exiled.Loader.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Permissions, Version=2.1.15.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.15\lib\net472\Exiled.Permissions.dll</HintPath>
+    <Reference Include="Exiled.Permissions, Version=2.1.18.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.1.18\lib\net472\Exiled.Permissions.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.Updater, Version=3.0.3.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.15\lib\net472\Exiled.Updater.dll</HintPath>
+      <HintPath>packages\EXILED.2.1.18\lib\net472\Exiled.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
       <HintPath>..\DLLs\Mirror.dll</HintPath>
