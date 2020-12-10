@@ -44,23 +44,28 @@ namespace XyberC_plugin.AdminGun
                     ply.ResetInventory(XyberC_plugin.HasAdminGun.Find(s => s.Userid == ply.UserId).ReplacedItems);
                     XyberC_plugin.HasAdminGun.RemoveAll(p => p.Userid == ply.UserId);
 
+                    if (!XyberC_plugin.HasAdminGun.Any())
+                    {
+                        XyberC_plugin.adminGun = false;
+                    }
                     response = "Admin Gun disabled";
                     return true;
                 }
                 else
                 {
-                    response = "Usage: \"agun [id] [command] [arguments]\"; replacing: \"#\" > ID, \"@\" > Name, \"$\" > Health; use \"&\" to separate multiple commands, [id] can be left out";
+                    /*response = "Usage: \"agun [id] [command] [arguments]\"; replacing: \"#\" > ID, \"@\" > Name, \"$\" > Health; use \"&\" to separate multiple commands, [id] can be left out";*/
+                    response = "Usage: \"agun [command] [arguments]\"; replacing: \"#\" > ID, \"@\" > Name, \"$\" > Health; use \"&\" to separate multiple commands";
                     return false;
                 }
             }
-            int aguntype = 0;
+            /*int aguntype = 0;*/
             string[] argument;
-            if (arguments.At(0) == "all")
+            /*if (arguments.At(0) == "all")
             {
                 aguntype = -1;
                 argument = arguments.Skip(1).ToArray();
             }
-            else if (int.TryParse(arguments.At(0), out int p))
+            else if (int.TryParse(arguments.At(0), out int p) == true && p > 0)
             {
                 aguntype = p;
                 argument = arguments.Skip(1).ToArray();
@@ -68,7 +73,9 @@ namespace XyberC_plugin.AdminGun
             else
             {
                 argument = arguments.ToArray();
-            }
+            }*/
+            argument = arguments.ToArray();
+
             string command = string.Join(" ", argument);
             command = command.Replace(" & ", "&");
             List<string> commands = new List<string>(command.Split('&'));
@@ -82,13 +89,15 @@ namespace XyberC_plugin.AdminGun
             {
                 List<Inventory.SyncItemInfo> items = new List<Inventory.SyncItemInfo>();
                 foreach (Inventory.SyncItemInfo item in ply.Inventory.items)
+                {
                     items.Add(item);
+                }
                 XyberC_plugin.HasAdminGun.Add(new AdminGunClass
                 {
                     Userid = ply.UserId,
                     ReplacedItems = items,
                     Commands = commands,
-                    AgunType = aguntype,
+                    /*AgunType = aguntype,*/
                 });
                 ply.Inventory.Clear();
                 if (Server.FriendlyFire == false)
@@ -104,6 +113,7 @@ namespace XyberC_plugin.AdminGun
                 ply.Inventory.AddNewItem(ItemType.GunCOM15);
                 ply.Inventory.AddNewItem(ItemType.GunCOM15);
             }
+            XyberC_plugin.adminGun = true;
             response = $"You have selected: \"{command}\"";
             return true;
         }
