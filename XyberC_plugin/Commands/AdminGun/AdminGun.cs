@@ -35,14 +35,14 @@ namespace XyberC_plugin.AdminGun
             }
             if (arguments.Count < 1)
             {
-                if (XyberC_plugin.HasAdminGun.Any(s => s.Userid == ply.UserId))
+                if (XyberC_plugin.HasAdminGun.Any(s => s.Id == ply.Id))
                 {
                     if (Server.FriendlyFire == false)
                     {
                         ply.IsFriendlyFireEnabled = false;
                     }
-                    ply.ResetInventory(XyberC_plugin.HasAdminGun.Find(s => s.Userid == ply.UserId).ReplacedItems);
-                    XyberC_plugin.HasAdminGun.RemoveAll(p => p.Userid == ply.UserId);
+                    ply.ResetInventory(XyberC_plugin.HasAdminGun.Find(s => s.Id == ply.Id).ReplacedItems);
+                    XyberC_plugin.HasAdminGun.RemoveAll(p => p.Id == ply.Id);
 
                     if (!XyberC_plugin.HasAdminGun.Any())
                     {
@@ -80,9 +80,9 @@ namespace XyberC_plugin.AdminGun
             command = command.Replace(" & ", "&");
             List<string> commands = new List<string>(command.Split('&'));
             command = command.Replace("&", " & ");
-            if (XyberC_plugin.HasAdminGun.Any(s => s.Userid == ply.UserId))
+            if (XyberC_plugin.HasAdminGun.Any(s => s.Id == ply.Id))
             {
-                int index = XyberC_plugin.HasAdminGun.FindIndex(p => p.Userid == ply.UserId);
+                int index = XyberC_plugin.HasAdminGun.FindIndex(p => p.Id == ply.Id);
                 XyberC_plugin.HasAdminGun[index].Commands = commands;
             }
             else
@@ -94,7 +94,7 @@ namespace XyberC_plugin.AdminGun
                 }
                 XyberC_plugin.HasAdminGun.Add(new AdminGunClass
                 {
-                    Userid = ply.UserId,
+                    Id = ply.Id,
                     ReplacedItems = items,
                     Commands = commands,
                     /*AgunType = aguntype,*/

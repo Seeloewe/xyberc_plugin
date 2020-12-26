@@ -1,5 +1,4 @@
 
-using Exiled.Events.EventArgs;
 using Exiled.API.Features;
 using System;
 using System.IO;
@@ -18,14 +17,17 @@ namespace XyberC_plugin
         private Handlers.XyberC_plugin_ServerH server;
 
         public static List<AdminGunClass> HasAdminGun = new List<AdminGunClass>();
-        public static bool adminGun = false;
         public static float MissDamage = 0;
         public static float HitDamage = 0;
-        public static bool missDamage = false;
         public static string LogFileLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EXILED", "Plugins", "XyberC_Logs");
         public static string LogFile1 = Path.Combine(LogFileLocation, "Log1.txt");
         public static string LogFile2 = Path.Combine(LogFileLocation, "Log2.txt");
         public static bool LogOther = false;
+        public static List<PlayerStatsClass> HasPlayerStats = new List<PlayerStatsClass>();
+
+        public static bool adminGun = false;
+        public static bool missDamage = false;
+        public static bool playerStats = false;
 
         public override string Name { get; } = "XyberC_plugin";
         public override string Author { get; } = "Seeloewe";
@@ -123,9 +125,16 @@ namespace XyberC_plugin
     }
     public class AdminGunClass
     {
-        public string Userid;
+        public int Id;
         public List<Inventory.SyncItemInfo> ReplacedItems;
         public List<string> Commands;
         /*public int AgunType;*/
+    }
+    public class PlayerStatsClass
+    {
+        public int Id;
+        public int Hits;
+        public int Shots;
+        public float Percentage;
     }
 }
