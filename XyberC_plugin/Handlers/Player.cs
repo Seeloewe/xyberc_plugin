@@ -40,6 +40,7 @@ namespace XyberC_plugin.Handlers
                             XyberC_plugin.HasPlayerStats.Add(new PlayerStatsClass
                             {
                                 Id = ev.Shooter.Id,
+                                Name = Player.Get(ev.Shooter.Id).Nickname,
                                 Shots = 1,
                                 Hits = 0
                             });
@@ -85,6 +86,32 @@ namespace XyberC_plugin.Handlers
         }
         public void OnLeft(LeftEventArgs ev)
         {
+            if (ev.Player.Team == Team.SCP)
+            {
+                if (ev.Player.Role == RoleType.Scp0492 )
+                {
+                    foreach (Player Pl in Player.List)
+                    {
+                        if (Pl.ReferenceHub.serverRoles.RemoteAdmin)
+                        {
+                            Pl.Broadcast(8, $"{ev.Player.Nickname} ({ev.Player.Id}) left as SCP-049-2 (cannot revive)", Broadcast.BroadcastFlags.AdminChat);
+                        }
+                    }
+                }
+                else
+                {
+                    XyberC_plugin.ReplaceSCP = ev.Player.Role;
+                    XyberC_plugin.ReplaceSCPHP = ev.Player.Health;
+                    XyberC_plugin.ReplaceSCPAHP = ev.Player.AdrenalineHealth;
+                    foreach (Player Pl in Player.List)
+                    {
+                        if (Pl.ReferenceHub.serverRoles.RemoteAdmin)
+                        {
+                            Pl.Broadcast(8, $"{ev.Player.Nickname} ({ev.Player.Id}) left as {ev.Player.Role}, revive using \"respawn\" command", Broadcast.BroadcastFlags.AdminChat);
+                        }
+                    }
+                }
+            }
             if (XyberC_plugin.HasAdminGun.Any(s => s.Id == ev.Player.Id))
             {
                 if (Server.FriendlyFire == false)
@@ -107,7 +134,7 @@ namespace XyberC_plugin.Handlers
                     foreach (string s in gun.Commands)
                     {
                         string command = s.Replace("#", $"{player.Id}");
-                        command = command.Replace("$", $"{player.Health}");
+                        command = command.Replace("$", $"{player.Health:0}");
                         if (player.DisplayNickname == null)
                         {
                             command = command.Replace("@", $"{player.Nickname}");
@@ -187,13 +214,20 @@ namespace XyberC_plugin.Handlers
         }
         public void OnKicking(KickingEventArgs ev)
         {
-            XyberC_plugin_Write.WriteToFile($"{ev.Issuer.Nickname} kicked {ev.Target.Nickname} for {ev.Reason}");
+            XyberC_plugin_Stuff.WriteToFile($"{ev.Issuer.Nickname} kicked {ev.Target.Nickname} for {ev.Reason}");
         }
         public void OnBanning(BanningEventArgs ev)
         {
             TimeSpan duration = TimeSpan.FromSeconds(ev.Duration);
             DateTime until = DateTime.Now + duration;
-            XyberC_plugin_Write.WriteToFile($"{ev.Issuer.Nickname} banned {ev.Target.Nickname} for {duration} (until {until}) for {ev.Reason}");
+            XyberC_plugin_Stuff.WriteToFile($"{ev.Issuer.Nickname} banned {ev.Target.Nickname} for {duration} (until {until}) for {ev.Reason}");
+        }
+        public void OnHandcuffing(HandcuffingEventArgs ev)
+        {
+            if (ev.Cuffer.Team == ev.Target.Team)
+            {
+                ev.IsAllowed = false;
+            }
         }
     }
 }

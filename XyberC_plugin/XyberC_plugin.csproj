@@ -93,6 +93,8 @@
     <Compile Include="Commands\ChangeHP\ChangeHP.cs" />
     <Compile Include="Commands\DamageOnMiss\DamageOnMiss.cs" />
     <Compile Include="Commands\PlayerStats\PlayerStats.cs" />
+    <Compile Include="Commands\RespawnSCP\RespawnSCP.cs" />
+    <Compile Include="Commands\TestCommand\TestCommand.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Handlers\Player.cs" />
     <Compile Include="Handlers\Server.cs" />

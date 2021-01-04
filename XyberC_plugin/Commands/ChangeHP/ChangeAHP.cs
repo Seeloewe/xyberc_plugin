@@ -2,7 +2,7 @@ using CommandSystem;
 using System;
 using Exiled.API.Features;
 
-namespace XyberC_plugin.AdminGun
+namespace XyberC_plugin.Commands
 {
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     [CommandHandler(typeof(GameConsoleCommandHandler))]

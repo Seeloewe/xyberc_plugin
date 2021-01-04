@@ -17,13 +17,16 @@ namespace XyberC_plugin
         private Handlers.XyberC_plugin_ServerH server;
 
         public static List<AdminGunClass> HasAdminGun = new List<AdminGunClass>();
-        public static float MissDamage = 0;
-        public static float HitDamage = 0;
+        public static float MissDamage = 0f;
+        public static float HitDamage = 0f;
         public static string LogFileLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EXILED", "Plugins", "XyberC_Logs");
         public static string LogFile1 = Path.Combine(LogFileLocation, "Log1.txt");
         public static string LogFile2 = Path.Combine(LogFileLocation, "Log2.txt");
         public static bool LogOther = false;
         public static List<PlayerStatsClass> HasPlayerStats = new List<PlayerStatsClass>();
+        public static RoleType ReplaceSCP = RoleType.None;
+        public static float ReplaceSCPHP = 0f;
+        public static float ReplaceSCPAHP = 0f;
 
         public static bool adminGun = false;
         public static bool missDamage = false;
@@ -48,6 +51,7 @@ namespace XyberC_plugin
             Player.ChangingRole += player.OnChangingRole;
             Player.Kicking += player.OnKicking;
             Player.Banning += player.OnBanning;
+            Player.Handcuffing += player.OnHandcuffing;
             Server.RoundEnded += server.OnRoundEnded;
             Server.SendingRemoteAdminCommand += server.OnSendingRemoteAdminCommand;
         }
@@ -63,6 +67,7 @@ namespace XyberC_plugin
             Player.ChangingRole -= player.OnChangingRole;
             Player.Kicking -= player.OnKicking;
             Player.Banning -= player.OnBanning;
+            Player.Handcuffing -= player.OnHandcuffing;
             Server.RoundEnded -= server.OnRoundEnded;
             Server.SendingRemoteAdminCommand -= server.OnSendingRemoteAdminCommand;
 
@@ -70,7 +75,7 @@ namespace XyberC_plugin
             server = null;
         }
     }
-    public class XyberC_plugin_Write
+    public class XyberC_plugin_Stuff
     {
 
         public static void WriteToFile(string text)
@@ -133,6 +138,7 @@ namespace XyberC_plugin
     public class PlayerStatsClass
     {
         public int Id;
+        public string Name;
         public int Hits;
         public int Shots;
         public float Percentage;
