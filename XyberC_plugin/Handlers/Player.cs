@@ -10,37 +10,38 @@ namespace XyberC_plugin.Handlers
     {
         public void OnShooting(ShootingEventArgs ev)
         {
-            if (ev.Shooter.IsGodModeEnabled && ev.Shooter.Role != RoleType.Tutorial)
+            Player shooter = ev.Shooter;
+            if (shooter.IsGodModeEnabled && shooter.Role != RoleType.Tutorial)
             {
-                ev.Shooter.IsGodModeEnabled = false;
+                shooter.IsGodModeEnabled = false;
             }
             if (XyberC_plugin.playerStats == true || XyberC_plugin.missDamage == true)
             {
-                Player player = Player.Get(ev.Target);
-                if (player == null || (player.Team == ev.Shooter.Team && ev.Shooter.IsFriendlyFireEnabled == false) || player.IsGodModeEnabled == true)
+                Player target = Player.Get(ev.Target);
+                if (target == null || (target.Team == shooter.Team && shooter.IsFriendlyFireEnabled == false) || target.IsGodModeEnabled == true)
                 {
-                    if (XyberC_plugin.MissDamage != 0 && ev.Shooter.IsGodModeEnabled == false)
+                    if (XyberC_plugin.MissDamage != 0 && shooter.IsGodModeEnabled == false)
                     {
                         if (XyberC_plugin.MissDamage > 0)
                         {
-                            ev.Shooter.Hurt(XyberC_plugin.MissDamage, ev.Shooter);
+                            shooter.Hurt(XyberC_plugin.MissDamage, shooter);
                         }
                         else
                         {
-                            float hp = ev.Shooter.Health;
+                            float hp = shooter.Health;
                             hp -= XyberC_plugin.MissDamage;
-                            ev.Shooter.Health = hp;
+                            shooter.Health = hp;
                         }
                     }
                     if (XyberC_plugin.playerStats == true)
                     {
-                        int index = XyberC_plugin.HasPlayerStats.FindIndex(p => p.Id == ev.Shooter.Id);
+                        int index = XyberC_plugin.HasPlayerStats.FindIndex(p => p.Id == shooter.Id);
                         if (index == -1)
                         {
                             XyberC_plugin.HasPlayerStats.Add(new PlayerStatsClass
                             {
-                                Id = ev.Shooter.Id,
-                                Name = Player.Get(ev.Shooter.Id).Nickname,
+                                Id = shooter.Id,
+                                Name = Player.Get(shooter.Id).Nickname,
                                 Shots = 1,
                                 Hits = 0
                             });
@@ -53,12 +54,12 @@ namespace XyberC_plugin.Handlers
                 }
                 else if (XyberC_plugin.playerStats == true)
                 {
-                    int index = XyberC_plugin.HasPlayerStats.FindIndex(p => p.Id == ev.Shooter.Id);
+                    int index = XyberC_plugin.HasPlayerStats.FindIndex(p => p.Id == shooter.Id);
                     if (index == -1)
                     {
                         XyberC_plugin.HasPlayerStats.Add(new PlayerStatsClass
                         {
-                            Id = ev.Shooter.Id,
+                            Id = shooter.Id,
                             Shots = 1,
                             Hits = 1
                         });
@@ -86,51 +87,41 @@ namespace XyberC_plugin.Handlers
         }
         public void OnLeft(LeftEventArgs ev)
         {
-            if (ev.Player.Team == Team.SCP)
+            Player player = ev.Player;
+            if (player.Team == Team.SCP && player.Health > 0f)
             {
-                if (ev.Player.Role == RoleType.Scp0492 )
+                XyberC_plugin.ReplaceSCP = player.Role;
+                XyberC_plugin.ReplaceSCPHP = player.Health;
+                XyberC_plugin.ReplaceSCPAHP = player.AdrenalineHealth;
+                XyberC_plugin.ReplaceSCPpos = player.Position;
+                foreach (Player Pl in Player.List)
                 {
-                    foreach (Player Pl in Player.List)
+                    if (Pl.ReferenceHub.serverRoles.RemoteAdmin)
                     {
-                        if (Pl.ReferenceHub.serverRoles.RemoteAdmin)
-                        {
-                            Pl.Broadcast(8, $"{ev.Player.Nickname} ({ev.Player.Id}) left as SCP-049-2 (cannot revive)", Broadcast.BroadcastFlags.AdminChat);
-                        }
-                    }
-                }
-                else
-                {
-                    XyberC_plugin.ReplaceSCP = ev.Player.Role;
-                    XyberC_plugin.ReplaceSCPHP = ev.Player.Health;
-                    XyberC_plugin.ReplaceSCPAHP = ev.Player.AdrenalineHealth;
-                    foreach (Player Pl in Player.List)
-                    {
-                        if (Pl.ReferenceHub.serverRoles.RemoteAdmin)
-                        {
-                            Pl.Broadcast(8, $"{ev.Player.Nickname} ({ev.Player.Id}) left as {ev.Player.Role}, revive using \"respawn\" command", Broadcast.BroadcastFlags.AdminChat);
-                        }
+                        Pl.Broadcast(6, $"{player.Nickname} ({player.Id}) left as {player.Role}, revive using \"respawn\" command", Broadcast.BroadcastFlags.AdminChat);
                     }
                 }
             }
-            if (XyberC_plugin.HasAdminGun.Any(s => s.Id == ev.Player.Id))
+            if (XyberC_plugin.HasAdminGun.Any(s => s.Id == player.Id))
             {
                 if (Server.FriendlyFire == false)
                 {
-                    ev.Player.IsFriendlyFireEnabled = false;
+                    player.IsFriendlyFireEnabled = false;
                 }
-                XyberC_plugin.HasAdminGun.Remove(XyberC_plugin.HasAdminGun.Find(p => p.Id == ev.Player.Id));
+                XyberC_plugin.HasAdminGun.Remove(XyberC_plugin.HasAdminGun.Find(p => p.Id == player.Id));
             }
         }
         public void OnShot(ShotEventArgs ev)
         {
-            if (XyberC_plugin.adminGun == true && ev.Shooter.CurrentItem.id == ItemType.GunCOM15 && XyberC_plugin.HasAdminGun.Any(s => s.Id == ev.Shooter.Id))
+            Player shooter = ev.Shooter;
+            if (XyberC_plugin.adminGun == true && shooter.CurrentItem.id == ItemType.GunCOM15 && XyberC_plugin.HasAdminGun.Any(s => s.Id == shooter.Id))
             {
-                Exiled.API.Extensions.Item.SetWeaponAmmo(ev.Shooter, ev.Shooter.CurrentItem, 12);
+                Exiled.API.Extensions.Item.SetWeaponAmmo(shooter, shooter.CurrentItem, 12);
                 ev.CanHurt = false;
                 Player player = Player.Get(ev.Target);
                 if (player != null)
                 {
-                    AdminGunClass gun = XyberC_plugin.HasAdminGun.Find(s => s.Id == ev.Shooter.Id);
+                    AdminGunClass gun = XyberC_plugin.HasAdminGun.Find(s => s.Id == shooter.Id);
                     foreach (string s in gun.Commands)
                     {
                         string command = s.Replace("#", $"{player.Id}");
@@ -143,21 +134,21 @@ namespace XyberC_plugin.Handlers
                         {
                             command = command.Replace("@", $"{player.DisplayNickname}");
                         }
-                        GameCore.Console.singleton.TypeCommand($"{command}", ev.Shooter.Sender);
+                        GameCore.Console.singleton.TypeCommand($"{command}", shooter.Sender);
                     }
                 }
             }
-            if (XyberC_plugin.missDamage == true && XyberC_plugin.HitDamage != 0 && ev.CanHurt == true && ev.Shooter.IsGodModeEnabled == false)
+            if (XyberC_plugin.missDamage == true && XyberC_plugin.HitDamage != 0 && ev.CanHurt == true && shooter.IsGodModeEnabled == false)
             {
                 if (XyberC_plugin.HitDamage > 0)
                 {
-                    ev.Shooter.Hurt(XyberC_plugin.HitDamage, ev.Shooter);
+                    shooter.Hurt(XyberC_plugin.HitDamage, shooter);
                 }
                 else
                 {
-                    float hp = ev.Shooter.Health;
+                    float hp = shooter.Health;
                     hp -= XyberC_plugin.HitDamage;
-                    ev.Shooter.Health = hp;
+                    shooter.Health = hp;
                 }
             }
         }
@@ -195,9 +186,9 @@ namespace XyberC_plugin.Handlers
         }
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
-            if (ev.Player.IsOverwatchEnabled == true)
+            if (XyberC_plugin.ReplaceMeSCP == ev.Player.Id)
             {
-                ev.NewRole = RoleType.Spectator;
+                ev.ShouldPreservePosition = true;
             }
             if (XyberC_plugin.adminGun == true && ev.NewRole.GetTeam() != Team.RIP && ev.NewRole.GetTeam() != Team.SCP && XyberC_plugin.HasAdminGun.Any(s => s.Id == ev.Player.Id))
             {
@@ -224,7 +215,7 @@ namespace XyberC_plugin.Handlers
         }
         public void OnHandcuffing(HandcuffingEventArgs ev)
         {
-            if (ev.Cuffer.Team == ev.Target.Team)
+            if (ev.Cuffer.Team == ev.Target.Team || XyberC_plugin.HasAdminGun.Any(s => s.Id == ev.Target.Id))
             {
                 ev.IsAllowed = false;
             }

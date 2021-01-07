@@ -56,6 +56,8 @@ namespace XyberC_plugin.Commands
                     return false;
                 }
             }
+            XyberC_plugin.ReplaceMeSCP = ReviveMe.Id;
+            ReviveMe.Position = XyberC_plugin.ReplaceSCPpos;
             ReviveMe.SetRole(XyberC_plugin.ReplaceSCP);
             ReviveMe.Health = XyberC_plugin.ReplaceSCPHP;
             ReviveMe.AdrenalineHealth = XyberC_plugin.ReplaceSCPAHP;

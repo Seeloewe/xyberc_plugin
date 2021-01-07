@@ -7,7 +7,7 @@ namespace XyberC_plugin.Handlers
 {
     class XyberC_plugin_ServerH
     {
-        public void OnRoundEnded(RoundEndedEventArgs ev)
+        public void OnRestartingRound()
         {
             XyberC_plugin.HasAdminGun.Clear();
             XyberC_plugin.adminGun = false;
@@ -17,7 +17,12 @@ namespace XyberC_plugin.Handlers
             XyberC_plugin.ReplaceSCP = RoleType.None;
             XyberC_plugin.ReplaceSCPHP = 0f;
             XyberC_plugin.ReplaceSCPAHP = 0f;
+            XyberC_plugin.ReplaceSCPpos = UnityEngine.Vector3.zero;
+            XyberC_plugin.HasPlayerStats.Clear();
             XyberC_plugin_Stuff.WriteToFile_Swap();
+        }
+        public void OnRoundEnded(RoundEndedEventArgs ev)
+        {
             if (XyberC_plugin.playerStats == true && XyberC_plugin.HasPlayerStats.Any())
             {
                 List<PlayerStatsClass> plyList = XyberC_plugin.HasPlayerStats.ToList();
@@ -69,7 +74,6 @@ namespace XyberC_plugin.Handlers
                     }
                 }
             }
-            XyberC_plugin.HasPlayerStats.Clear();
         }
         public void OnSendingRemoteAdminCommand(SendingRemoteAdminCommandEventArgs ev)
         {

@@ -24,9 +24,11 @@ namespace XyberC_plugin
         public static string LogFile2 = Path.Combine(LogFileLocation, "Log2.txt");
         public static bool LogOther = false;
         public static List<PlayerStatsClass> HasPlayerStats = new List<PlayerStatsClass>();
+        public static int ReplaceMeSCP = -1;
         public static RoleType ReplaceSCP = RoleType.None;
         public static float ReplaceSCPHP = 0f;
         public static float ReplaceSCPAHP = 0f;
+        public static UnityEngine.Vector3 ReplaceSCPpos = UnityEngine.Vector3.zero;
 
         public static bool adminGun = false;
         public static bool missDamage = false;
@@ -53,6 +55,7 @@ namespace XyberC_plugin
             Player.Banning += player.OnBanning;
             Player.Handcuffing += player.OnHandcuffing;
             Server.RoundEnded += server.OnRoundEnded;
+            Server.RestartingRound += server.OnRestartingRound;
             Server.SendingRemoteAdminCommand += server.OnSendingRemoteAdminCommand;
         }
 
@@ -69,6 +72,7 @@ namespace XyberC_plugin
             Player.Banning -= player.OnBanning;
             Player.Handcuffing -= player.OnHandcuffing;
             Server.RoundEnded -= server.OnRoundEnded;
+            Server.RestartingRound -= server.OnRestartingRound;
             Server.SendingRemoteAdminCommand -= server.OnSendingRemoteAdminCommand;
 
             player = null;

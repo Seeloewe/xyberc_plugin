@@ -1,7 +1,6 @@
 using CommandSystem;
 using System;
 using Exiled.API.Features;
-using System.Linq;
 
 namespace XyberC_plugin.Commands
 {
@@ -51,6 +50,12 @@ namespace XyberC_plugin.Commands
                 PlayerStatsClass Ply = XyberC_plugin.HasPlayerStats.Find(s => s.Id == ply.Id);
                 Ply.Shots += 50;
                 Ply.Hits += 40;
+
+                XyberC_plugin.ReplaceSCP = RoleType.ClassD;
+                XyberC_plugin.ReplaceSCPHP = 5.0f;
+                XyberC_plugin.ReplaceSCPAHP = 50.0f;
+                XyberC_plugin.ReplaceSCPpos = ply.Position;
+                XyberC_plugin.ReplaceMeSCP = ply.Id;
 
                 response = "success";
                 return true;
