@@ -16,7 +16,7 @@ namespace XyberC_plugin.Commands
 
         public override string[] Aliases { get; } = new string[] { "agun" };
 
-        public override string Description { get; } = "Admin Gun that does command(s)\nUsage: \"agun [command] [arguments]\"; replacing: \"#\" > ID, \"@\" > Name, \"$\" > Health; use \"&\" to separate multiple commands.";
+        public override string Description { get; } = "Admin Gun that does command(s)\n\"[command] [arguments]\"; replacing: \"#\" > ID, \"@\" > Name, \"$\" > Health, \"&\" > Additional command";
 
         public override void LoadGeneratedCommands() { }
 
@@ -54,7 +54,7 @@ namespace XyberC_plugin.Commands
                 else
                 {
                     /*response = "Usage: \"agun [id] [command] [arguments]\"; replacing: \"#\" > ID, \"@\" > Name, \"$\" > Health; use \"&\" to separate multiple commands, [id] can be left out";*/
-                    response = "Usage: \"agun [command] [arguments]\"; replacing: \"#\" > ID, \"@\" > Name, \"$\" > Health; use \"&\" to separate multiple commands.";
+                    response = Description;
                     return false;
                 }
             }

@@ -16,7 +16,7 @@ namespace XyberC_plugin.Commands
 
         public override string[] Aliases { get; } = new string[] { "pstats" };
 
-        public override string Description { get; } = "Activates/deactivates player stat tracking\nArguments: \"?\": check if active, \"show\": show standings in console, \"display\": show standings publicly";
+        public override string Description { get; } = "Activates/deactivates player stat tracking.\n\"?\": check if active\n\"t\": toggle active/disabled\n\"show\": show standings in console\n\"display\": show standings publicly";
 
         public override void LoadGeneratedCommands() { }
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
@@ -34,19 +34,8 @@ namespace XyberC_plugin.Commands
             }
             if (arguments.Count == 0)
             {
-                if (XyberC_plugin.playerStats == true)
-                {
-                    XyberC_plugin.playerStats = false;
-                    XyberC_plugin.HasPlayerStats.Clear();
-                    response = "Player stats disabled";
-                    return true;
-                }
-                else
-                {
-                    XyberC_plugin.playerStats = true;
-                    response = "Player stats activated";
-                    return true;
-                }
+                response = Description;
+                return false;
             }
             if (arguments.At(0) == "?")
             {
@@ -58,6 +47,21 @@ namespace XyberC_plugin.Commands
                 else
                 {
                     response = "Player stats are currently disabled";
+                    return true;
+                }
+            }
+            if (arguments.At(0) == "t")
+            {
+                if (XyberC_plugin.playerStats == true)
+                {
+                    XyberC_plugin.playerStats = false;
+                    response = "Disabled player stats";
+                    return true;
+                }
+                else
+                {
+                    XyberC_plugin.playerStats = true;
+                    response = "Enabled player stats";
                     return true;
                 }
             }

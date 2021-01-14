@@ -24,7 +24,6 @@ namespace XyberC_plugin
         public static string LogFile2 = Path.Combine(LogFileLocation, "Log2.txt");
         public static bool LogOther = false;
         public static List<PlayerStatsClass> HasPlayerStats = new List<PlayerStatsClass>();
-        public static int ReplaceMeSCP = -1;
         public static RoleType ReplaceSCP = RoleType.None;
         public static float ReplaceSCPHP = 0f;
         public static float ReplaceSCPAHP = 0f;
@@ -32,7 +31,8 @@ namespace XyberC_plugin
 
         public static bool adminGun = false;
         public static bool missDamage = false;
-        public static bool playerStats = false;
+        public static bool playerStats = true;
+        public static bool replaceSCP = true;
 
         public override string Name { get; } = "XyberC_plugin";
         public override string Author { get; } = "Seeloewe";

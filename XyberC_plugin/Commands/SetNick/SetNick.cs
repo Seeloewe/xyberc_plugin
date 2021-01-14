@@ -14,7 +14,7 @@ namespace XyberC_plugin.Commands
 
         public override string[] Aliases { get; } = new string[] { "snick", "setnickname" };
 
-        public override string Description { get; } = "Sets nickname of player";
+        public override string Description { get; } = "Sets nickname of player\n\"[ID]\" - ID of player to set nickname of\n\"[text]\" - Text to set nickname to";
 
         public override void LoadGeneratedCommands() { }
 
@@ -26,9 +26,9 @@ namespace XyberC_plugin.Commands
                 response = "Permission denied.";
                 return false;
             }
-            if (arguments.Count != 2)
+            if (arguments.Count < 2)
             {
-                response = "Usage: \"snick [ID] [text]\", leave text empty to reset";
+                response = Description;
                 return false;
             }
             Player Ply = Player.Get(arguments.At(0));
@@ -37,7 +37,7 @@ namespace XyberC_plugin.Commands
                 response = $"Player not found: {arguments.At(0)}";
                 return false;
             }
-            Ply.DisplayNickname = arguments.At(1);
+            Ply.DisplayNickname = String.Join(" ", arguments.Segment(1, arguments.Count - 1));
             if (Ply.DisplayNickname == "")
             {
                 response = $"Reset {Ply.Nickname}'s name";

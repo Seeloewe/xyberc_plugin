@@ -88,7 +88,7 @@ namespace XyberC_plugin.Handlers
         public void OnLeft(LeftEventArgs ev)
         {
             Player player = ev.Player;
-            if (player.Team == Team.SCP && player.Health > 0f)
+            if (XyberC_plugin.replaceSCP == true && player.Team == Team.SCP && player.Health > 0f)
             {
                 XyberC_plugin.ReplaceSCP = player.Role;
                 XyberC_plugin.ReplaceSCPHP = player.Health;
@@ -186,10 +186,6 @@ namespace XyberC_plugin.Handlers
         }
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
-            if (XyberC_plugin.ReplaceMeSCP == ev.Player.Id)
-            {
-                ev.ShouldPreservePosition = true;
-            }
             if (XyberC_plugin.adminGun == true && ev.NewRole.GetTeam() != Team.RIP && ev.NewRole.GetTeam() != Team.SCP && XyberC_plugin.HasAdminGun.Any(s => s.Id == ev.Player.Id))
             {
                 ev.Items.Clear();

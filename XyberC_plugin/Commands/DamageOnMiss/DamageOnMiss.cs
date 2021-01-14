@@ -14,7 +14,7 @@ namespace XyberC_plugin.Commands
 
         public override string[] Aliases { get; } = new string[] { "missdamage", "damagemiss" };
 
-        public override string Description { get; } = "Sets damage taken by the shooter when missing to [amount], and when hitting to [amount]";
+        public override string Description { get; } = "Sets damage taken by shooter when hitting/missing shots\n\"[amount]\" - Damage on missing\n\"[amount]\" - Damage on hitting";
 
         public override void LoadGeneratedCommands() { }
 

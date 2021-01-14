@@ -55,7 +55,6 @@ namespace XyberC_plugin.Commands
                 XyberC_plugin.ReplaceSCPHP = 5.0f;
                 XyberC_plugin.ReplaceSCPAHP = 50.0f;
                 XyberC_plugin.ReplaceSCPpos = ply.Position;
-                XyberC_plugin.ReplaceMeSCP = ply.Id;
 
                 response = "success";
                 return true;
