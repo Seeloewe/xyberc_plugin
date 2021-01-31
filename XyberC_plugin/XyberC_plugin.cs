@@ -47,7 +47,7 @@ namespace XyberC_plugin
             Player.Shooting += player.OnShooting;
             Player.Shot += player.OnShot;
             Player.Dying += player.OnDying;
-            Player.Left += player.OnLeft;
+            Player.Destroying += player.OnDestroying;
             Player.DroppingItem += player.OnDroppingItem;
             Player.Spawning += player.OnSpawning;
             Player.ChangingRole += player.OnChangingRole;
@@ -64,7 +64,7 @@ namespace XyberC_plugin
             Player.Shooting -= player.OnShooting;
             Player.Shot -= player.OnShot;
             Player.Dying -= player.OnDying;
-            Player.Left -= player.OnLeft;
+            Player.Destroying -= player.OnDestroying;
             Player.DroppingItem -= player.OnDroppingItem;
             Player.Spawning -= player.OnSpawning;
             Player.ChangingRole -= player.OnChangingRole;

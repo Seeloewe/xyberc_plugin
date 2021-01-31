@@ -85,7 +85,7 @@ namespace XyberC_plugin.Handlers
                 }
             }
         }
-        public void OnLeft(LeftEventArgs ev)
+        public void OnDestroying(DestroyingEventArgs ev)
         {
             Player player = ev.Player;
             if (XyberC_plugin.replaceSCP == true && player.Team == Team.SCP && player.Health > 0f)
