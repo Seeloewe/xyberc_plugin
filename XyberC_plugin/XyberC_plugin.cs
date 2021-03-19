@@ -16,6 +16,8 @@ namespace XyberC_plugin
         private Handlers.XyberC_plugin_PlayerH player;
         private Handlers.XyberC_plugin_ServerH server;
 
+        public static bool IsEnabled = false;
+
         public static List<AdminGunClass> HasAdminGun = new List<AdminGunClass>();
         public static float MissDamage = 0f;
         public static float HitDamage = 0f;
@@ -28,55 +30,81 @@ namespace XyberC_plugin
         public static float ReplaceSCPHP = 0f;
         public static float ReplaceSCPAHP = 0f;
         public static UnityEngine.Vector3 ReplaceSCPpos = UnityEngine.Vector3.zero;
+        public static List<string> CurPlayerList = new List<string>();
+        public static List<string> PrevPlayerList = new List<string>();
+        public static string WelcomeMessage = "Welcome %name!";
+        public static ushort WelcomeMessageDur = 8;
+        public static Dictionary<int, UnityEngine.Vector3> savedPositions = new Dictionary<int, UnityEngine.Vector3>();
 
         public static bool adminGun = false;
         public static bool missDamage = false;
         public static bool playerStats = true;
         public static bool replaceSCP = true;
+        public static bool welcomeMessage = true;
 
         public override string Name { get; } = "XyberC_plugin";
         public override string Author { get; } = "Seeloewe";
-        public override string Prefix { get; } = "xyz";
+        public override string Prefix { get; } = "XyberC";
         public override void OnEnabled()
         {
-            Directory.CreateDirectory(LogFileLocation);
+            if (Config.IsEnabled == true)
+            {
+                IsEnabled = true;
+                Directory.CreateDirectory(LogFileLocation);
 
-            player = new Handlers.XyberC_plugin_PlayerH();
-            server = new Handlers.XyberC_plugin_ServerH();
+                if (Config.WelcomeMessage == "" || Config.WelcomeMessage == "Insert welcome message here, \"%name\" will be replaced by the player's name")
+                {
+                    welcomeMessage = false;
+                }
+                else
+                {
+                    WelcomeMessage = Config.WelcomeMessage;
+                    WelcomeMessageDur = Config.WelcomeMessageDur;
+                }
 
-            Player.Shooting += player.OnShooting;
-            Player.Shot += player.OnShot;
-            Player.Dying += player.OnDying;
-            Player.Destroying += player.OnDestroying;
-            Player.DroppingItem += player.OnDroppingItem;
-            Player.Spawning += player.OnSpawning;
-            Player.ChangingRole += player.OnChangingRole;
-            Player.Kicking += player.OnKicking;
-            Player.Banning += player.OnBanning;
-            Player.Handcuffing += player.OnHandcuffing;
-            Server.RoundEnded += server.OnRoundEnded;
-            Server.RestartingRound += server.OnRestartingRound;
-            Server.SendingRemoteAdminCommand += server.OnSendingRemoteAdminCommand;
+                player = new Handlers.XyberC_plugin_PlayerH();
+                server = new Handlers.XyberC_plugin_ServerH();
+
+                Player.Shooting += player.OnShooting;
+                Player.Shot += player.OnShot;
+                Player.Dying += player.OnDying;
+                Player.Left += player.OnLeft;
+                Player.DroppingItem += player.OnDroppingItem;
+                Player.Spawning += player.OnSpawning;
+                Player.ChangingRole += player.OnChangingRole;
+                Player.Kicking += player.OnKicking;
+                Player.Banning += player.OnBanning;
+                Player.Handcuffing += player.OnHandcuffing;
+                Player.Verified += player.OnVerified;
+                Server.RoundEnded += server.OnRoundEnded;
+                Server.RestartingRound += server.OnRestartingRound;
+                Server.SendingRemoteAdminCommand += server.OnSendingRemoteAdminCommand;
+            }
         }
 
         public override void OnDisabled()
         {
-            Player.Shooting -= player.OnShooting;
-            Player.Shot -= player.OnShot;
-            Player.Dying -= player.OnDying;
-            Player.Destroying -= player.OnDestroying;
-            Player.DroppingItem -= player.OnDroppingItem;
-            Player.Spawning -= player.OnSpawning;
-            Player.ChangingRole -= player.OnChangingRole;
-            Player.Kicking -= player.OnKicking;
-            Player.Banning -= player.OnBanning;
-            Player.Handcuffing -= player.OnHandcuffing;
-            Server.RoundEnded -= server.OnRoundEnded;
-            Server.RestartingRound -= server.OnRestartingRound;
-            Server.SendingRemoteAdminCommand -= server.OnSendingRemoteAdminCommand;
+            if (IsEnabled == true)
+            {
+                IsEnabled = false;
+                Player.Shooting -= player.OnShooting;
+                Player.Shot -= player.OnShot;
+                Player.Dying -= player.OnDying;
+                Player.Left -= player.OnLeft;
+                Player.DroppingItem -= player.OnDroppingItem;
+                Player.Spawning -= player.OnSpawning;
+                Player.ChangingRole -= player.OnChangingRole;
+                Player.Kicking -= player.OnKicking;
+                Player.Banning -= player.OnBanning;
+                Player.Handcuffing -= player.OnHandcuffing;
+                Player.Verified -= player.OnVerified;
+                Server.RoundEnded -= server.OnRoundEnded;
+                Server.RestartingRound -= server.OnRestartingRound;
+                Server.SendingRemoteAdminCommand -= server.OnSendingRemoteAdminCommand;
 
-            player = null;
-            server = null;
+                player = null;
+                server = null;
+            }
         }
     }
     public class XyberC_plugin_Stuff

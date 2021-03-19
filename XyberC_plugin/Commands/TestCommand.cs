@@ -56,7 +56,7 @@ namespace XyberC_plugin.Commands
                 XyberC_plugin.ReplaceSCPAHP = 50.0f;
                 XyberC_plugin.ReplaceSCPpos = ply.Position;
 
-                response = "success";
+                response = $"success";
                 return true;
             }
             catch (Exception e)

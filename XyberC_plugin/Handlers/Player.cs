@@ -84,15 +84,33 @@ namespace XyberC_plugin.Handlers
                     }
                 }
             }
+            if (XyberC_plugin.replaceSCP == true && ev.HitInformation.GetDamageType() == DamageTypes.Flying)
+            {
+                Player player = ev.Target;
+                if (player.Team == Team.SCP && player.Health > 0f)
+                {
+                    XyberC_plugin.ReplaceSCP = player.Role;
+                    XyberC_plugin.ReplaceSCPHP = player.Health;
+                    XyberC_plugin.ReplaceSCPAHP = player.ArtificialHealth;
+                    XyberC_plugin.ReplaceSCPpos = player.Position;
+                    foreach (Player Pl in Player.List)
+                    {
+                        if (Pl.ReferenceHub.serverRoles.RemoteAdmin)
+                        {
+                            Pl.Broadcast(6, $"{player.Nickname} ({player.Id}) left as {player.Role}, revive using \"respawn\" command", Broadcast.BroadcastFlags.AdminChat);
+                        }
+                    }
+                }
+            }
         }
-        public void OnDestroying(DestroyingEventArgs ev)
+        public void OnLeft(LeftEventArgs ev)
         {
             Player player = ev.Player;
             if (XyberC_plugin.replaceSCP == true && player.Team == Team.SCP && player.Health > 0f)
             {
                 XyberC_plugin.ReplaceSCP = player.Role;
                 XyberC_plugin.ReplaceSCPHP = player.Health;
-                XyberC_plugin.ReplaceSCPAHP = player.AdrenalineHealth;
+                XyberC_plugin.ReplaceSCPAHP = player.ArtificialHealth;
                 XyberC_plugin.ReplaceSCPpos = player.Position;
                 foreach (Player Pl in Player.List)
                 {
@@ -214,6 +232,23 @@ namespace XyberC_plugin.Handlers
             if (ev.Cuffer.Team == ev.Target.Team || XyberC_plugin.HasAdminGun.Any(s => s.Id == ev.Target.Id))
             {
                 ev.IsAllowed = false;
+            }
+        }
+        public void OnVerified(VerifiedEventArgs ev)
+        {
+            Player player = ev.Player;
+            if (XyberC_plugin.welcomeMessage == true && !XyberC_plugin.CurPlayerList.Contains(player.UserId))
+            {
+                if (XyberC_plugin.PrevPlayerList.Contains(player.UserId))
+                {
+                    XyberC_plugin.CurPlayerList.Add(player.UserId);
+                }
+                else
+                {
+                    XyberC_plugin.CurPlayerList.Add(player.UserId);
+                    string text = XyberC_plugin.WelcomeMessage.Replace("%name", $"{(string.IsNullOrEmpty(player.DisplayNickname) ? player.Nickname : player.DisplayNickname)}");
+                    player.Broadcast(XyberC_plugin.WelcomeMessageDur, $"{text}");
+                }
             }
         }
     }

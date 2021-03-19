@@ -37,7 +37,7 @@ namespace XyberC_plugin.Commands
                 response = $"Player not found: {arguments.At(0)}";
                 return false;
             }
-            float curHP = Ply.AdrenalineHealth;
+            float curHP = Ply.ArtificialHealth;
             try
             {
                 curHP += float.Parse(arguments.At(1));
@@ -47,7 +47,7 @@ namespace XyberC_plugin.Commands
                 response = $"Not a valid number: {arguments.At(1)}";
                 return false;
             }
-            Ply.AdrenalineHealth = curHP;
+            Ply.ArtificialHealth = curHP;
             response = $"AHP of {Ply.Nickname} changed to {curHP}";
             return true;
         }

@@ -45,23 +45,29 @@
     <Reference Include="CommandSystem.Core">
       <HintPath>..\DLLs\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API, Version=2.1.29.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.29\lib\net472\Exiled.API.dll</HintPath>
+    <Reference Include="Exiled.API, Version=2.8.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.8.0\lib\net472\Exiled.API.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Bootstrap, Version=2.1.29.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.29\lib\net472\Exiled.Bootstrap.dll</HintPath>
+    <Reference Include="Exiled.Bootstrap, Version=2.8.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.8.0\lib\net472\Exiled.Bootstrap.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events, Version=2.1.29.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.29\lib\net472\Exiled.Events.dll</HintPath>
+    <Reference Include="Exiled.CreditTags, Version=2.8.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.8.0\lib\net472\Exiled.CreditTags.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Loader, Version=2.1.29.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.29\lib\net472\Exiled.Loader.dll</HintPath>
+    <Reference Include="Exiled.CustomItems, Version=2.8.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.8.0\lib\net472\Exiled.CustomItems.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Permissions, Version=2.1.29.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.29\lib\net472\Exiled.Permissions.dll</HintPath>
+    <Reference Include="Exiled.Events, Version=2.8.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.8.0\lib\net472\Exiled.Events.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Updater, Version=3.0.3.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.2.1.29\lib\net472\Exiled.Updater.dll</HintPath>
+    <Reference Include="Exiled.Loader, Version=2.8.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.8.0\lib\net472\Exiled.Loader.dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.Permissions, Version=2.8.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.8.0\lib\net472\Exiled.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.Updater, Version=3.1.1.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\EXILED.2.8.0\lib\net472\Exiled.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
       <HintPath>..\DLLs\Mirror.dll</HintPath>
@@ -88,17 +94,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\ChangeHP\ChangeAHP.cs" />
-    <Compile Include="Commands\AdminGun\AdminGun.cs" />
-    <Compile Include="Commands\ChangeHP\ChangeHP.cs" />
-    <Compile Include="Commands\DamageOnMiss\DamageOnMiss.cs" />
-    <Compile Include="Commands\PlayerStats\PlayerStats.cs" />
-    <Compile Include="Commands\RespawnSCP\RespawnSCP.cs" />
-    <Compile Include="Commands\TestCommand\TestCommand.cs" />
+    <Compile Include="Commands\AddCola.cs" />
+    <Compile Include="Commands\ChangeAHP.cs" />
+    <Compile Include="Commands\AdminGun.cs" />
+    <Compile Include="Commands\ChangeHP.cs" />
+    <Compile Include="Commands\DamageOnMiss.cs" />
+    <Compile Include="Commands\ChangeClass.cs" />
+    <Compile Include="Commands\PlayerStats.cs" />
+    <Compile Include="Commands\RespawnSCP.cs" />
+    <Compile Include="Commands\TestCommand.cs" />
+    <Compile Include="Commands\TPA.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Handlers\Player.cs" />
     <Compile Include="Handlers\Server.cs" />
-    <Compile Include="Commands\SetNick\SetNick.cs" />
+    <Compile Include="Commands\SetNick.cs" />
     <Compile Include="XyberC_plugin.cs" />
   </ItemGroup>
   <ItemGroup>

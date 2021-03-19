@@ -20,6 +20,10 @@ namespace XyberC_plugin.Handlers
             XyberC_plugin.ReplaceSCPpos = UnityEngine.Vector3.zero;
             XyberC_plugin.HasPlayerStats.Clear();
             XyberC_plugin_Stuff.WriteToFile_Swap();
+            XyberC_plugin.PrevPlayerList.Clear();
+            XyberC_plugin.PrevPlayerList = XyberC_plugin.CurPlayerList.ToList();
+            XyberC_plugin.CurPlayerList.Clear();
+            XyberC_plugin.savedPositions.Clear();
         }
         public void OnRoundEnded(RoundEndedEventArgs ev)
         {

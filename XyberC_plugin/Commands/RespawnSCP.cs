@@ -47,7 +47,29 @@ namespace XyberC_plugin.Commands
                         return true;
                     }
                 }
-                if (arguments.At(0) == "t")
+                if (arguments.At(0) == "t" || arguments.At(0) == "tele" || arguments.At(0) == "teleport")
+                {
+                    if (XyberC_plugin.replaceSCP == true)
+                    {
+                        if (XyberC_plugin.ReplaceSCPpos == UnityEngine.Vector3.zero)
+                        {
+                            response = "There is no dead SCP to teleport to";
+                            return false;
+                        }
+                        else
+                        {
+                            response = "Teleporting to dead SCPs location...";
+                            ply.Position = XyberC_plugin.ReplaceSCPpos;
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        response = "Respawning SCPs is disabled";
+                        return false;
+                    }
+                }
+                if (arguments.At(0) == "s" || arguments.At(0) == "switch")
                 {
                     if (XyberC_plugin.replaceSCP == true)
                     {
@@ -78,20 +100,23 @@ namespace XyberC_plugin.Commands
             bool hp = true;
             bool bc = true;
             List<string> args = arguments.ToList();
-            if (args.Any(x => x == "spawn"))
+            if (args.Any(x => x == "pos") || args.Any(x => x == "spawn"))
             {
                 keeppos = false;
+                args.Remove("pos");
                 args.Remove("spawn");
             }
-            if (args.Any(x => x == "hp"))
+            if (args.Any(x => x == "hp") || args.Any(x => x == "health"))
             {
                 hp = false;
                 args.Remove("hp");
+                args.Remove("health");
             }
-            if (args.Any(x => x == "bc"))
+            if (args.Any(x => x == "bc") || args.Any(x => x == "silent"))
             {
                 bc = false;
                 args.Remove("bc");
+                args.Remove("silent");
             }
             if (args.Count == 0)
             {
@@ -123,7 +148,7 @@ namespace XyberC_plugin.Commands
             if (hp == true)
             {
                 ReviveMe.Health = XyberC_plugin.ReplaceSCPHP;
-                ReviveMe.AdrenalineHealth = XyberC_plugin.ReplaceSCPAHP;
+                ReviveMe.ArtificialHealth = XyberC_plugin.ReplaceSCPAHP;
             }
             if (bc == true)
             {
@@ -136,7 +161,7 @@ namespace XyberC_plugin.Commands
             XyberC_plugin.ReplaceSCP = RoleType.None;
             XyberC_plugin.ReplaceSCPHP = 0f;
             XyberC_plugin.ReplaceSCPAHP = 0f;
-            response = $"Respawned {ReviveMe.Nickname} ({ReviveMe.Id}) as {ReviveMe.Role} with {ReviveMe.Health} HP, {ReviveMe.AdrenalineHealth} AHP";
+            response = $"Respawned {ReviveMe.Nickname} ({ReviveMe.Id}) as {ReviveMe.Role} with {ReviveMe.Health} HP, {ReviveMe.ArtificialHealth} AHP";
             return true;
         }
     }
